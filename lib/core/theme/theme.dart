@@ -20,13 +20,12 @@ class AppTheme {
     ),
     inputDecorationTheme: const InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.grey,
-        ),
+        borderSide: BorderSide(color: AppColors.grey, width: 2),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.primary,
+          width: 2
         ),
       ),
     ),
