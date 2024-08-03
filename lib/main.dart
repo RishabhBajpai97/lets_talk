@@ -4,6 +4,7 @@ import 'package:lets_talk/core/theme/theme.dart';
 import 'package:lets_talk/features/auth/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
 import 'package:lets_talk/features/auth/presentation/pages/login.dart';
 import 'package:lets_talk/features/auth/presentation/pages/signup.dart';
+import 'package:lets_talk/features/home/presentation/pages/home.dart';
 import 'package:lets_talk/init_dependencies.dart';
 
 void main() {
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         routes: {
           "/login": (context) => const LoginPage(),
           "/signup": (context) => const SignupPage(),
+          "/home": (context) => const HomePage()
         },
       ),
     );
