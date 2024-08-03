@@ -5,11 +5,15 @@ sealed class AuthBlocState {}
 
 final class AuthBlocInitial extends AuthBlocState {}
 
-final class AuthLoginSuccess extends AuthBlocState {
-  final String message;
-  AuthLoginSuccess({required this.message});
-}
+final class AuthLoading extends AuthBlocState{}
 
+final class AuthSignupSuccess extends AuthBlocState {
+  final String message;
+  AuthSignupSuccess({required this.message});
+}
+final class AuthLoginSuccess extends AuthBlocState {
+  AuthLoginSuccess();
+}
 final class AuthFailure extends AuthBlocState {
   final String message;
   AuthFailure({required this.message});

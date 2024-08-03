@@ -28,7 +28,7 @@ class SignupPage extends StatelessWidget {
                 ),
               ),
             );
-        } else if (state is AuthLoginSuccess) {
+        } else if (state is AuthSignupSuccess) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
