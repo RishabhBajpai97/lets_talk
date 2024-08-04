@@ -9,4 +9,5 @@ abstract interface class AuthRepository {
     required password,
     required username,
   });
+  Future<Either<Failure, User?>> getCurrentUser();
 }

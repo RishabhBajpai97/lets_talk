@@ -7,6 +7,7 @@ abstract interface class AuthRemoteDatasource {
   Future<UserModel> signup(
       {required email, required password, required username});
   Future<UserModel> login({required password, required username});
+  Future<UserModel?> getCurrentUser();
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -59,6 +60,22 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         throw (e.response!.data["message"][0]);
       }
       throw (e.toString());
+    }
+  }
+
+  @override
+  Future<UserModel?> getCurrentUser() async {
+    try {
+      final response =
+          await _dio.get("users/me", options: Options(headers: {}));
+      return UserModel.fromJson(response.data);
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 500) {
+        throw (e.response!.data["message"][0]);
+      } else if (e.response!.statusCode == 400) {
+        throw (e.response!.data["message"][0]);
+      }
+      throw (e.response!.data["message"]);
     }
   }
 }

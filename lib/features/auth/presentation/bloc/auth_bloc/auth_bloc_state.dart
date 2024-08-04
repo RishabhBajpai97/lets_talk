@@ -18,3 +18,8 @@ final class AuthFailure extends AuthBlocState {
   final String message;
   AuthFailure({required this.message});
 }
+
+final class CurrentUserDataSuccess extends AuthBlocState{
+  final User user;
+  CurrentUserDataSuccess({required this.user});
+}

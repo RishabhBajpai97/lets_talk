@@ -5,8 +5,15 @@ import 'package:lets_talk/core/theme/colors.dart';
 import 'package:lets_talk/features/auth/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
 import 'package:lets_talk/features/auth/presentation/widgets/custom_field.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+
 
   @override
   Widget build(BuildContext context) {

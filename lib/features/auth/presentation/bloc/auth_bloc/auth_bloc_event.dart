@@ -21,3 +21,4 @@ class AuthLogin extends AuthBlocEvent {
     required this.username,
   });
 }
+final class GetCurrentUserEvent extends AuthBlocEvent{}

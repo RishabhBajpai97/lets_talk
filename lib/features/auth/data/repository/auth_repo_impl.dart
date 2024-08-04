@@ -22,9 +22,22 @@ class AuthRepoImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> login({required password, required username}) async{
+  Future<Either<Failure, User>> login(
+      {required password, required username}) async {
     try {
-      final response = await _remoteDatasource.login( password: password, username: username);
+      final response =
+          await _remoteDatasource.login(password: password, username: username);
+      return right(response);
+    } catch (e) {
+      return left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User?>> getCurrentUser() async {
+    try {
+      final response =
+          await _remoteDatasource.getCurrentUser();
       return right(response);
     } catch (e) {
       return left(Failure(message: e.toString()));
