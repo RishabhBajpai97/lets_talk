@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:lets_talk/features/auth/data/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract interface class AuthRemoteDatasource {
   Future<UserModel> signup(
@@ -12,7 +13,10 @@ abstract interface class AuthRemoteDatasource {
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   final Dio _dio;
-  AuthRemoteDatasourceImpl({required dio}) : _dio = dio;
+  final SharedPreferences _prefs;
+  AuthRemoteDatasourceImpl({required dio, required prefs})
+      : _dio = dio,
+        _prefs = prefs;
   @override
   Future<UserModel> signup(
       {required email, required password, required username}) async {
@@ -51,7 +55,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
           },
         ),
       );
-      print(response.data);
+      await _prefs.setString("token", response.data["access_token"]);
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
       if (e.response!.statusCode == 500) {
@@ -66,8 +70,16 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   @override
   Future<UserModel?> getCurrentUser() async {
     try {
-      final response =
-          await _dio.get("users/me", options: Options(headers: {}));
+      final token = _prefs.getString("token");
+      if (token == null) {
+        throw ("Error in Getting user token");
+      }
+      final response = await _dio.get(
+        "users/me",
+        options: Options(
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
       if (e.response!.statusCode == 500) {

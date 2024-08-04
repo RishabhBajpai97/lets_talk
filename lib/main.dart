@@ -8,8 +8,9 @@ import 'package:lets_talk/features/auth/presentation/pages/signup.dart';
 import 'package:lets_talk/features/home/presentation/pages/home.dart';
 import 'package:lets_talk/init_dependencies.dart';
 
-void main() {
-  initDependencies();
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await initDependencies();
   runApp(
     MultiBlocProvider(
       providers: [

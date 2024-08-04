@@ -10,14 +10,21 @@ import 'package:lets_talk/features/auth/domain/usecase/GetCurrentUser.dart';
 import 'package:lets_talk/features/auth/domain/usecase/UserLogin.dart';
 import 'package:lets_talk/features/auth/domain/usecase/UserSignup.dart';
 import 'package:lets_talk/features/auth/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 GetIt sl = GetIt.instance;
-initDependencies() {
+initDependencies() async {
+  final prefs = await SharedPreferences.getInstance();
   initDio();
+  sl.registerLazySingleton<SharedPreferences>(() => prefs);
   sl.registerFactory<AuthRepository>(
       () => AuthRepoImpl(remoteDatasoure: sl<AuthRemoteDatasource>()));
   sl.registerFactory<AuthRemoteDatasource>(
-      () => AuthRemoteDatasourceImpl(dio: sl<Dio>()));
+    () => AuthRemoteDatasourceImpl(
+      dio: sl<Dio>(),
+      prefs: sl<SharedPreferences>(),
+    ),
+  );
   sl.registerFactory(() => Usersignup(authRepo: sl<AuthRepository>()));
   sl.registerFactory(() => Userlogin(authRepo: sl<AuthRepository>()));
   sl.registerFactory(() => GetCurrentUser(authRepo: sl<AuthRepository>()));
